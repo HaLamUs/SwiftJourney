@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB9BC8091D3E612400EB1102 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9BC8071D3E612400EB1102 /* BookTableViewCell.swift */; };
+		EB9BC80A1D3E612400EB1102 /* BookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB9BC8081D3E612400EB1102 /* BookTableViewCell.xib */; };
 		EBA4BF0B1D3DD86B00ABEB05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA4BF0A1D3DD86B00ABEB05 /* AppDelegate.swift */; };
 		EBA4BF0D1D3DD86B00ABEB05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA4BF0C1D3DD86B00ABEB05 /* ViewController.swift */; };
 		EBA4BF101D3DD86C00ABEB05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBA4BF0E1D3DD86C00ABEB05 /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB9BC8071D3E612400EB1102 /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
+		EB9BC8081D3E612400EB1102 /* BookTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookTableViewCell.xib; sourceTree = "<group>"; };
 		EBA4BF071D3DD86B00ABEB05 /* testAutolayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testAutolayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBA4BF0A1D3DD86B00ABEB05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBA4BF0C1D3DD86B00ABEB05 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				EBA4BF0A1D3DD86B00ABEB05 /* AppDelegate.swift */,
+				EB9BC8071D3E612400EB1102 /* BookTableViewCell.swift */,
+				EB9BC8081D3E612400EB1102 /* BookTableViewCell.xib */,
 				EBA4BF0C1D3DD86B00ABEB05 /* ViewController.swift */,
 				EBA4BF0E1D3DD86C00ABEB05 /* Main.storyboard */,
 				EBA4BF111D3DD86C00ABEB05 /* Assets.xcassets */,
@@ -238,6 +244,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB9BC80A1D3E612400EB1102 /* BookTableViewCell.xib in Resources */,
 				EBA4BF151D3DD86C00ABEB05 /* LaunchScreen.storyboard in Resources */,
 				EBA4BF121D3DD86C00ABEB05 /* Assets.xcassets in Resources */,
 				EBA4BF101D3DD86C00ABEB05 /* Main.storyboard in Resources */,
@@ -266,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBA4BF0D1D3DD86B00ABEB05 /* ViewController.swift in Sources */,
+				EB9BC8091D3E612400EB1102 /* BookTableViewCell.swift in Sources */,
 				EBA4BF0B1D3DD86B00ABEB05 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,6 +423,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = testAutolayout/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lam.deptrai.testAutolayout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -427,6 +436,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = testAutolayout/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lam.deptrai.testAutolayout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -503,6 +513,7 @@
 				EBA4BF311D3DD86C00ABEB05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EBA4BF321D3DD86C00ABEB05 /* Build configuration list for PBXNativeTarget "testAutolayoutTests" */ = {
 			isa = XCConfigurationList;
@@ -511,6 +522,7 @@
 				EBA4BF341D3DD86C00ABEB05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EBA4BF351D3DD86C00ABEB05 /* Build configuration list for PBXNativeTarget "testAutolayoutUITests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +531,7 @@
 				EBA4BF371D3DD86C00ABEB05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
