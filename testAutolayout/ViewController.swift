@@ -74,16 +74,11 @@ class ViewController: UIViewController {
             let data = NSData(contentsOf: url),
             let imageCellLH = UIImage(data: data as Data)
                 else{ print("die"); return }
-//            let dataImage = NSData(contentsOf: urlImage)!
-//            let imageCellLH = UIImage(data:dataImage as Data)
             self.imageCell = imageCellLH
             DispatchQueue.main.async(execute: {
                 self.tableViewBookList.reloadData()
             })
-            print()
-            
         }.resume()
-
     }
     
 }
@@ -103,7 +98,8 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
         let cell = tableViewBookList.dequeueReusableCell(withIdentifier: "bookcell", for: indexPath) as! BookTableViewCell
         cell.titileBook.text = arrList[indexPath.row]
         guard imageCell != nil else { return cell}
-        cell.imageView?.image = imageCell
+        cell.avatarBook.image = imageCell
+//        cell.avatarBook.contentMode = .scaleAspectFit
         
         return cell;
         

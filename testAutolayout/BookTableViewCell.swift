@@ -17,6 +17,9 @@ class BookTableViewCell: UITableViewCell {
         super.awakeFromNib()
         avatarBook.layer.cornerRadius = self.bounds.height / 2
         avatarBook.layer.masksToBounds = true
+        avatarBook.layer.borderWidth = 1
+//        avatarBook.layer.borderColor = UIColor.yellow()
+//        avatarBook.contentMode = .scaleAspectFit
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
