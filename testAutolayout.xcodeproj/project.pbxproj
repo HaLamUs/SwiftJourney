@@ -16,6 +16,8 @@
 		EBA4BF151D3DD86C00ABEB05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBA4BF131D3DD86C00ABEB05 /* LaunchScreen.storyboard */; };
 		EBA4BF201D3DD86C00ABEB05 /* testAutolayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA4BF1F1D3DD86C00ABEB05 /* testAutolayoutTests.swift */; };
 		EBA4BF2B1D3DD86C00ABEB05 /* testAutolayoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA4BF2A1D3DD86C00ABEB05 /* testAutolayoutUITests.swift */; };
+		EBF65A411D43C8020077FA38 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF65A401D43C8020077FA38 /* Book.swift */; };
+		EBF728B71D4725B70023E6A1 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF728B61D4725B70023E6A1 /* DownloadTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		EBA4BF261D3DD86C00ABEB05 /* testAutolayoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testAutolayoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBA4BF2A1D3DD86C00ABEB05 /* testAutolayoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testAutolayoutUITests.swift; sourceTree = "<group>"; };
 		EBA4BF2C1D3DD86C00ABEB05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBF65A401D43C8020077FA38 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		EBF728B61D4725B70023E6A1 /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadTask.swift; path = ../DownloadTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +106,11 @@
 			isa = PBXGroup;
 			children = (
 				EBA4BF0A1D3DD86B00ABEB05 /* AppDelegate.swift */,
+				EBF728B61D4725B70023E6A1 /* DownloadTask.swift */,
 				EB9BC8071D3E612400EB1102 /* BookTableViewCell.swift */,
 				EB9BC8081D3E612400EB1102 /* BookTableViewCell.xib */,
 				EBA4BF0C1D3DD86B00ABEB05 /* ViewController.swift */,
+				EBF65A401D43C8020077FA38 /* Book.swift */,
 				EBA4BF0E1D3DD86C00ABEB05 /* Main.storyboard */,
 				EBA4BF111D3DD86C00ABEB05 /* Assets.xcassets */,
 				EBA4BF131D3DD86C00ABEB05 /* LaunchScreen.storyboard */,
@@ -272,6 +278,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBF728B71D4725B70023E6A1 /* DownloadTask.swift in Sources */,
+				EBF65A411D43C8020077FA38 /* Book.swift in Sources */,
 				EBA4BF0D1D3DD86B00ABEB05 /* ViewController.swift in Sources */,
 				EB9BC8091D3E612400EB1102 /* BookTableViewCell.swift in Sources */,
 				EBA4BF0B1D3DD86B00ABEB05 /* AppDelegate.swift in Sources */,
