@@ -30,31 +30,30 @@ class ViewController: UIViewController {
     var downdLoadImageOperationDic = [IndexPath:Operation]()
     
     //testing ====================
-    lazy var downloadImageSession:URLSession = {
-        let config = URLSessionConfiguration.background(withIdentifier: "lamdeptrai")
-//        config.httpMaximumConnectionsPerHost = 1; // minh tao nhieu session
-        let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-        return session
-    }()
+//    lazy var downloadImageSession:URLSession = {
+//        let config = URLSessionConfiguration.background(withIdentifier: "lamdeptrai")
+////        config.httpMaximumConnectionsPerHost = 1; // minh tao nhieu session
+//        let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+//        return session
+//    }()
+//    
+//    var sessionDownload = URLSessionDownloadTask()
+//    var session2 = URLSessionDownloadTask()
     
-    var sessionDownload = URLSessionDownloadTask()
-    var session2 = URLSessionDownloadTask()
+    var downTask:DispatchWorkItem? = nil
     
+    lazy var bgQueue = DispatchQueue(label: "lamdeptrai", attributes: [.concurrent,.qosBackground], target: nil)
     
     //testing ====================
-    //delete hoan toan luc scroll dung cho no resume
-    //hoac cai pool, ==> viet 1 class boc thang nay lai, check bien isvaible
     
     @IBAction func touchInSide(_ sender: UIBarButtonItem) {
-        print();
-//        sessionDownload.cancel()
-        print("lmaha ahanssana2")
-        downloadImageQueue.cancelAllOperations() //ket hop ko ngon roi bo mia cai thang cancel di, deck work y nhu minh doan
+//        downloadImageQueue.cancelAllOperations()
+        downTask?.cancel()
     }
     
     @IBAction func huyThangThu2(_ sender: UIBarButtonItem) {
         print()
-        session2.cancel()
+//        session2.cancel()
     }
     
 //MARK: function
@@ -74,47 +73,36 @@ class ViewController: UIViewController {
     }
     
     func downLoadImage(){
-        let index = IndexPath(item: 1, section: 1)
-        let urlImage = URL(string: "http://192.168.1.142:8080/image/")
-        let temp = DownloadTask(indexPath: index, photoUrl: urlImage!, successDownload: {(image) in print()}, failDownload: {(err) in print()})
+//        let index = IndexPath(item: 1, section: 1)
+//        let urlImage = URL(string: "http://192.168.1.142:8080/image/")
+//        let temp = DownloadTask(indexPath: index, photoUrl: urlImage!, successDownload: {(image) in print()}, failDownload: {(err) in print()})
+//        
+//        downloadImageQueue.addOperation(temp)
         
-        downloadImageQueue.addOperation(temp)
+        downTask = DispatchWorkItem{
+            for item in 1...10{
+                sleep(1)
+                print(item)
+            }
+        }
+        bgQueue.async(execute: downTask!)
+//        DispatchQueue.main.async(execute: downTask!)
+//        let bgQueue2 = DispatchQueue(label: "lamdept2rai", attributes: .qosBackground, target: nil)
+        downTask = DispatchWorkItem{
+            for item in 1...1000{
+                sleep(1)
+                print("lamha \(item)")
+            }
+        }
+        bgQueue.async(execute: downTask!)
         
-        
-        
-//        let urlLH = URL(string: "http://192.168.1.142:8080/image/lam.png")
-//        sessionDownload = downloadImageSession.downloadTask(with: urlLH!);//config
-//        sessionDownload.resume();//run
-////        downloadImageSession.downloadTask(with: urlLH!).resume()
-//        let urlLH2 = URL(string: "http://192.168.1.142:8080/image/lam.png")
-//        session2 = downloadImageSession.downloadTask(with: urlLH2!)
-//        session2.resume()
-        
-    }
-    
-    func downLoadImage2() {
-        let urlLH = URL(string: "http://192.168.1.142:8080/image/lam.png")
-        downloadImageSession.downloadTask(with: urlLH!){
-            (url, respond, err) in
-            guard let httpRes = respond as? HTTPURLResponse where httpRes.statusCode == 200,
-                let url = url where err == nil,
-                let data = try? Data(contentsOf: url),
-                let imageCellLH = UIImage(data: data)
-                else{
-//                    self.failDownload(err!)
-                    print("die")
-                    return }
-            print("Down success")
-//            self.successDownload(imageCellLH)
-            }.resume()
-
-        print();
     }
     
     func parseJsonFromUrl(){
         let urlLH = URL(string:"http://192.168.1.142:8080/data.json")!
         URLSession.shared.dataTask(with: urlLH) { (data, response, err) in
-            guard let jsonLH = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) else {print ("[Die] Parse Json die"); return}
+            guard let data = data,
+            let jsonLH = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {print ("[Die] Parse Json die"); return}
             
             guard let totalLH = jsonLH["total"],
                 let dataLH = jsonLH["data"] else {print("die");return}
@@ -153,19 +141,6 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController:/*URLSessionDelegate,*/ URLSessionDownloadDelegate{
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print("Download done \(location) \n")//cast ve kieu minh muon
-    }
-    
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
-        if error != nil {
-            print("bi loi \(error) \n")
-        }
-//        print("bi loi")
-    }
-}
-
 
 //MARK:extension
 
@@ -177,9 +152,9 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableViewBookList.dequeueReusableCell(withIdentifier: "bookcell", for: indexPath) as! BookTableViewCell
         
-        let bookAtCell = arrList[indexPath.row] as Book
-        
-        cell.titileBook.text = bookAtCell.titleBook
+//        let bookAtCell = arrList[indexPath.row] as Book
+//        
+//        cell.titileBook.text = bookAtCell.titleBook
         
         /*
         let userPhotoId = bookAtCell.imageUrl
@@ -209,6 +184,13 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
  */
         return cell;
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let bookAtCell = arrList[indexPath.row] as Book
+        
+        (cell as! BookTableViewCell).titileBook.text = bookAtCell.titleBook
+    }
+    
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard imageCacheList.count < 50 else {
