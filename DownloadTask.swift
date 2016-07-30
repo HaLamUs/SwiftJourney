@@ -10,14 +10,8 @@ import Foundation
 import UIKit
 
 class DownloadTask: Operation {
-    let indexPath:IndexPath
+//    let indexPath:IndexPath
     let photoUrl:URL
-    
-//    lazy var downloadImageSession:URLSession = {
-//        let config = URLSessionConfiguration.default
-//        let session = URLSession(configuration: config)
-//        return session
-//    }()
     
     let successDownload:(UIImage) -> Void
     let failDownload:(NSError) -> Void
@@ -33,8 +27,8 @@ class DownloadTask: Operation {
     var sessionDownload = URLSessionDownloadTask()
 
     
-    init(indexPath:IndexPath, photoUrl:URL, successDownload:(UIImage) -> Void, failDownload:(NSError) -> Void) {
-        self.indexPath = indexPath
+    init(/*indexPath:IndexPath,*/ photoUrl:URL, successDownload:(UIImage) -> Void, failDownload:(NSError) -> Void) {
+//        self.indexPath = indexPath
         self.photoUrl = photoUrl
         self.successDownload = successDownload
         self.failDownload = failDownload
@@ -42,23 +36,29 @@ class DownloadTask: Operation {
     
     override func main() {
         if isCancelled {return}
-        let urlLH = URL(string: "http://192.168.1.142:8080/image/lam.png")
-        sessionDownload = downloadImageSession.downloadTask(with: urlLH!);//config
-        sessionDownload.resume();//run
+//        let urlLH = URL(string: "http://192.168.1.142:8080/image/lam.png")
+        sessionDownload = downloadImageSession.downloadTask(with: photoUrl);
+        sessionDownload.resume();
         sleep(2)// need something to run for cancel this nsoperation
     }
     
     override func cancel() {
-        print("lmaha ahanssana")
         sessionDownload.cancel()
         super.cancel()
-//        return
     }
 }
 
 extension DownloadTask:URLSessionDownloadDelegate{
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         print("Download done \(location) \n")
+        /*
+         et data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+         imageView.image = UIImage(data: data!)
+         */
+//        let data = Data(contentsOf: location)
+//        self.successDownload(UIImage(data:data)
+//        
+//        let data = data()
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
