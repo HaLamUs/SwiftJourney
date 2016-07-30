@@ -9,17 +9,21 @@
 import Foundation
 import UIKit
 
+protocol DownloadImageOperationDelagate:class{
+    func DownloadImageSuccess(operation:DownloadTask, image:UIImage)
+    func DownloadImageFail(operation:DownloadTask)
+}
+
 class DownloadTask: Operation {
 //    let indexPath:IndexPath
     let photoUrl:URL
     
-    let successDownload:(UIImage) -> Void
-    let failDownload:(NSError) -> Void
+    weak var delegate:DownloadImageOperationDelagate?
     
     
     lazy var downloadImageSession:URLSession = {
         let config = URLSessionConfiguration.background(withIdentifier: "lamdeptrai")
-        config.httpMaximumConnectionsPerHost = 1; // minh tao nhieu session
+//        config.httpMaximumConnectionsPerHost = 1; // minh tao nhieu session
         let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
         return session
     }()
@@ -27,43 +31,42 @@ class DownloadTask: Operation {
     var sessionDownload = URLSessionDownloadTask()
 
     
-    init(/*indexPath:IndexPath,*/ photoUrl:URL, successDownload:(UIImage) -> Void, failDownload:(NSError) -> Void) {
+    init(/*indexPath:IndexPath,*/ photoUrl:URL, delegate:DownloadImageOperationDelagate?) {
 //        self.indexPath = indexPath
         self.photoUrl = photoUrl
-        self.successDownload = successDownload
-        self.failDownload = failDownload
+        self.delegate = delegate
     }
     
     override func main() {
         if isCancelled {return}
-//        let urlLH = URL(string: "http://192.168.1.142:8080/image/lam.png")
         sessionDownload = downloadImageSession.downloadTask(with: photoUrl);
         sessionDownload.resume();
-        sleep(2)// need something to run for cancel this nsoperation
+//        sleep(2)// need something to run for cancel this nsoperation
+    }
+    
+    override func start() {
+        if isCancelled {return}
+        main()//them cai nay, doc ky phan custom nsoperation
     }
     
     override func cancel() {
         sessionDownload.cancel()
-        super.cancel()
     }
 }
 
 extension DownloadTask:URLSessionDownloadDelegate{
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         print("Download done \(location) \n")
-        /*
-         et data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
-         imageView.image = UIImage(data: data!)
-         */
-//        let data = Data(contentsOf: location)
-//        self.successDownload(UIImage(data:data)
-//        
-//        let data = data()
+        let imageData = try? Data(contentsOf: location)
+        let downLoadImage = UIImage(data: imageData!)
+        self.delegate?.DownloadImageSuccess(operation: self, image: downLoadImage!)
+        
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
         if error != nil {
             print("bi loi \(error) \n")
+            self.delegate?.DownloadImageFail(operation: self)
         }
     }
 }
