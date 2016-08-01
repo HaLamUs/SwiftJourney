@@ -50,8 +50,8 @@ class ViewController: UIViewController {
         let myNib = UINib(nibName: "BookTableViewCell", bundle: myBundle)
         tableViewBookList.register(myNib, forCellReuseIdentifier: "bookcell")
         
-//        parseJsonFromUrl()
-        downLoadImage()
+        parseJsonFromUrl()
+//        downLoadImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,8 +59,9 @@ class ViewController: UIViewController {
     }
     
     func downLoadImage(){
-        let urlImage = URL(string: "http://192.168.1.142:8080/image/lam.png")
-        let downloadOperation = DownloadTask(photoUrl: urlImage!, delegate: self)
+        let urlImage = URL(string: "http://192.168.1.142:8080/image/test.zip")
+        let index = IndexPath(item: 1, section: 1)
+        let downloadOperation = DownloadTask(indexPath: index, photoUrl: urlImage!, delegate: self)
         downloadImageQueue.addOperation(downloadOperation)
         print()
     }
@@ -90,7 +91,7 @@ class ViewController: UIViewController {
     
 //MARK: Manager Queue
     
-    func startDownloadImage(operation:Operation, indexPath:IndexPath){
+    func startDownloadImage(operation:DownloadTask, indexPath:IndexPath){
         if (downdLoadImageOperationDic[indexPath] != nil){
             return
         }
@@ -122,15 +123,15 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
         let bookAtCell = arrList[indexPath.row] as Book
         (cell as! BookTableViewCell).titileBook.text = bookAtCell.titleBook
         
-        let userPhotoId = bookAtCell.imageUrl
-        if let imageForCell = imageCacheList[userPhotoId] {
+        let titleBook = bookAtCell.titleBook
+        if let imageForCell = imageCacheList[titleBook] {
             (cell as! BookTableViewCell).avatarBook.image = imageForCell
         }
         else{
              let urlImage = URL(string: "http://192.168.1.142:8080/image/\(bookAtCell.imageUrl)")
             if !tableViewBookList.isDecelerating {
-//                let downloadOperation = DownloadTask(indexPath: indexPath, photoUrl: urlImage!)
-//                startDownloadImage(operation: downloadOperation, indexPath: indexPath)
+                let downloadOperation = DownloadTask(indexPath: indexPath, photoUrl: urlImage!, delegate: self)
+                startDownloadImage(operation: downloadOperation, indexPath: indexPath)
             }
         }
     }
@@ -157,17 +158,17 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
 
 extension ViewController:DownloadImageOperationDelagate{
     func DownloadImageFail(operation: DownloadTask) {
-//        self.downdLoadImageOperationDic.removeValue(forKey: operation.indexPath)
+        self.downdLoadImageOperationDic.removeValue(forKey: operation.indexPath)
     }
     
     func DownloadImageSuccess(operation: DownloadTask, image: UIImage) {
         print()
-//        let bookAtCell = arrList[operation.indexPath.row] as Book
-//        imageCacheList[bookAtCell.titleBook] = image
-//        DispatchQueue.main.async(execute: {
-//            self.tableViewBookList.reloadRows(at: [operation.indexPath], with: .none)
-//        })
-//        self.downdLoadImageOperationDic.removeValue(forKey: operation.indexPath)
+        let bookAtCell = arrList[operation.indexPath.row] as Book
+        imageCacheList[bookAtCell.titleBook] = image
+        DispatchQueue.main.async(execute: {
+            self.tableViewBookList.reloadRows(at: [operation.indexPath], with: .none)
+        })
+        self.downdLoadImageOperationDic.removeValue(forKey: operation.indexPath)
     }
 }
 
