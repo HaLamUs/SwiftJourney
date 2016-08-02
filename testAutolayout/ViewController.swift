@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     
     lazy var downloadImageQueue: OperationQueue = {
         let downloadQueue = OperationQueue()
-        downloadQueue.name = "DownloadQueueLH"
+//        downloadQueue.name = "DownloadQueueLH"
         downloadQueue.maxConcurrentOperationCount = 2
         return downloadQueue
     }()
@@ -30,10 +30,7 @@ class ViewController: UIViewController {
     var downdLoadImageOperationDic = [IndexPath:Operation]()
     
     @IBAction func touchInSide(_ sender: UIBarButtonItem) {
-//        DispatchQueue.main.async { 
-//            self.downloadImageQueue.cancelAllOperations()
-//        }
-        downloadImageQueue.cancelAllOperations()
+//        downloadImageQueue.cancelAllOperations()
 //        downTask?.cancel()
     }
 
@@ -50,8 +47,8 @@ class ViewController: UIViewController {
         let myNib = UINib(nibName: "BookTableViewCell", bundle: myBundle)
         tableViewBookList.register(myNib, forCellReuseIdentifier: "bookcell")
         
-        parseJsonFromUrl()
-//        downLoadImage()
+//        parseJsonFromUrl()
+        downLoadImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,9 +56,25 @@ class ViewController: UIViewController {
     }
     
     func downLoadImage(){
+        
+        let index = IndexPath(item: 1, section: 1)
+        for indexw in 1 ... 50 {
+            let urlImage = URL(string: "http://192.168.1.142:8080/image/images_\(indexw).jpg")
+            let downloadOperation = DownloadTask(indexPath: index, photoUrl: urlImage!, delegate: self)
+            downloadImageQueue.addOperation(downloadOperation)
+        }
+        print()
+    }
+    
+    func downLoadImage_v2(){
         let urlImage = URL(string: "http://192.168.1.142:8080/image/test.zip")
         let index = IndexPath(item: 1, section: 1)
         let downloadOperation = DownloadTask(indexPath: index, photoUrl: urlImage!, delegate: self)
+        
+         let downloadOperation2 = DownloadTask(indexPath: index, photoUrl: URL(string: "http://192.168.1.142:8080/image/test2.zip")!, delegate: self)
+        let downloadOperation3 = DownloadTask(indexPath: index, photoUrl: URL(string: "http://192.168.1.142:8080/image/test3.zip")!, delegate: self)
+//        downloadImageQueue.addOperation(downloadOperation3)
+        downloadImageQueue.addOperation(downloadOperation2)
         downloadImageQueue.addOperation(downloadOperation)
         print()
     }
@@ -81,11 +94,11 @@ class ViewController: UIViewController {
                 let book = Book(titleBook: value["booktitle"]!, imageUrl: value["image"]!)
                 self.arrList.insert(book, at: index)
             }
-            self.tableViewBookList.dataSource = self//tranh chua co data da load
-            self.tableViewBookList.delegate = self
-            DispatchQueue.main.async(execute: {
-                self.tableViewBookList.reloadData()
-            })
+//            self.tableViewBookList.dataSource = self//tranh chua co data da load
+//            self.tableViewBookList.delegate = self
+//            DispatchQueue.main.async(execute: {
+//                self.tableViewBookList.reloadData()
+//            })
             }.resume()
     }
     
@@ -138,19 +151,22 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
     
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard imageCacheList.count < 10 else {
+        guard imageCacheList.count < 50 else {
             return
         }
         reloadVisibleCell()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard imageCacheList.count < 10 else {
+        guard imageCacheList.count < 50 else {
             return
         }
         
         if scrollView.isDecelerating {
-            downloadImageQueue.cancelAllOperations()
+//            downloadImageQueue.cancelAllOperations()
+            for oper in downloadImageQueue.operations{
+                oper.cancel()
+            }
             downdLoadImageOperationDic.removeAll()
         }
     }

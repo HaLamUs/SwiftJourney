@@ -18,6 +18,7 @@
 		EBA4BF2B1D3DD86C00ABEB05 /* testAutolayoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA4BF2A1D3DD86C00ABEB05 /* testAutolayoutUITests.swift */; };
 		EBF65A411D43C8020077FA38 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF65A401D43C8020077FA38 /* Book.swift */; };
 		EBF728B71D4725B70023E6A1 /* DownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF728B61D4725B70023E6A1 /* DownloadTask.swift */; };
+		EBF806F41D4F189000E500A2 /* LHConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF806F31D4F189000E500A2 /* LHConcurrentOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		EBA4BF2C1D3DD86C00ABEB05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBF65A401D43C8020077FA38 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		EBF728B61D4725B70023E6A1 /* DownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadTask.swift; path = ../DownloadTask.swift; sourceTree = "<group>"; };
+		EBF806F31D4F189000E500A2 /* LHConcurrentOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHConcurrentOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				EBA4BF0A1D3DD86B00ABEB05 /* AppDelegate.swift */,
 				EBF728B61D4725B70023E6A1 /* DownloadTask.swift */,
+				EBF806F31D4F189000E500A2 /* LHConcurrentOperation.swift */,
 				EB9BC8071D3E612400EB1102 /* BookTableViewCell.swift */,
 				EB9BC8081D3E612400EB1102 /* BookTableViewCell.xib */,
 				EBA4BF0C1D3DD86B00ABEB05 /* ViewController.swift */,
@@ -208,6 +211,11 @@
 						DevelopmentTeam = XM9E7773FZ;
 						DevelopmentTeamName = "Ha Lam (Personal Team)";
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 					EBA4BF1A1D3DD86C00ABEB05 = {
 						CreatedOnToolsVersion = 8.0;
@@ -280,6 +288,7 @@
 			files = (
 				EBF728B71D4725B70023E6A1 /* DownloadTask.swift in Sources */,
 				EBF65A411D43C8020077FA38 /* Book.swift in Sources */,
+				EBF806F41D4F189000E500A2 /* LHConcurrentOperation.swift in Sources */,
 				EBA4BF0D1D3DD86B00ABEB05 /* ViewController.swift in Sources */,
 				EB9BC8091D3E612400EB1102 /* BookTableViewCell.swift in Sources */,
 				EBA4BF0B1D3DD86B00ABEB05 /* AppDelegate.swift in Sources */,
